@@ -9,8 +9,7 @@ some types of testing.
 
 ## Tech stack
 
-* Kotlin
-* Spring Boot
+* Spring Boot (Kotlin)
 * React
 * PostgreSQL
 * nginx
