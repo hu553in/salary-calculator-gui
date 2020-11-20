@@ -16,4 +16,4 @@ some types of testing.
 
 ## How to run
 
-See README of [main repository](https://github.com/hu553in/salary-calculator).
+See the README of [the main repository](https://github.com/hu553in/salary-calculator).
