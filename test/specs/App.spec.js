@@ -15,7 +15,7 @@ describe('App', () => {
   });
   it(
     'should enable/disable "Calculate" button ' +
-    'depending on employee ID input value',
+    'depending on employee ID input value emptiness',
     () => {
       expect($('.app__calculateButton')).toBeDisabled();
       $('.app__employeeIdInput').setValue('0');
@@ -25,8 +25,8 @@ describe('App', () => {
     }
   );
   it(
-    'should calculate salary via ' +
-    'pressing "Calculate" button',
+    'should calculate salary ' +
+    'via clicking "Calculate" button',
     () => {
       $('.app__employeeIdInput').setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
@@ -38,8 +38,8 @@ describe('App', () => {
     }
   );
   it(
-    'should calculate salary via ' +
-    'pressing "Enter" button',
+    'should calculate salary ' +
+    'via pressing "Enter" keyboard button',
     () => {
       $('.app__employeeIdInput').setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
@@ -52,7 +52,7 @@ describe('App', () => {
   );
   it(
     'should output non-existent employee ID error ' +
-    'via pressing "Calculate" button',
+    'via clicking "Calculate" button',
     () => {
       $('.app__employeeIdInput').setValue('0');
       $('.app__calculateButton').click();
@@ -66,7 +66,7 @@ describe('App', () => {
   );
   it(
     'should output non-existent employee ID error ' +
-    'via pressing "Enter" button',
+    'via pressing "Enter" keyboard button',
     () => {
       $('.app__employeeIdInput').setValue('0');
       $('.app__employeeIdInput').keys('\uE007');
