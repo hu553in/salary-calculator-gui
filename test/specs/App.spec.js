@@ -28,12 +28,15 @@ describe('App', () => {
     'should calculate salary ' +
     'via clicking "Calculate" button',
     () => {
+      browser.setupInterceptor();
+      browser.expectRequest('GET', /\/api\/calculate-salary\//, 200);
       $('.app__employeeIdInput').setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
       );
       $('.app__calculateButton').click();
       $('.app__employeeSalaryLabel').waitForExist();
       $('.app__employeeSalary').waitForExist();
+      browser.assertRequests();
       expect($('.app__employeeSalary')).toHaveValue('39166.666666666664');
     }
   );
@@ -41,12 +44,15 @@ describe('App', () => {
     'should calculate salary ' +
     'via pressing "Enter" keyboard button',
     () => {
+      browser.setupInterceptor();
+      browser.expectRequest('GET', /\/api\/calculate-salary\//, 200);
       $('.app__employeeIdInput').setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
       );
       $('.app__employeeIdInput').keys('\uE007');
       $('.app__employeeSalaryLabel').waitForExist();
       $('.app__employeeSalary').waitForExist();
+      browser.assertRequests();
       expect($('.app__employeeSalary')).toHaveValue('39166.666666666664');
     }
   );
@@ -54,10 +60,13 @@ describe('App', () => {
     'should output non-existent employee ID error ' +
     'via clicking "Calculate" button',
     () => {
+      browser.setupInterceptor();
+      browser.expectRequest('GET', /\/api\/calculate-salary\//, 422);
       $('.app__employeeIdInput').setValue('0');
       $('.app__calculateButton').click();
       $('.app__errorsLabel').waitForExist();
       $('.app__errors').waitForExist();
+      browser.assertRequests();
       expect($('.app__errors')).toHaveValue(
         'Unable to calculate salary because of: ' +
         'Unable to get employee by ID \'0\''
@@ -68,6 +77,8 @@ describe('App', () => {
     'should output non-existent employee ID error ' +
     'via pressing "Enter" keyboard button',
     () => {
+      browser.setupInterceptor();
+      browser.expectRequest('GET', /\/api\/calculate-salary\//, 422);
       $('.app__employeeIdInput').setValue('0');
       $('.app__employeeIdInput').keys('\uE007');
       $('.app__errorsLabel').waitForExist();
@@ -76,6 +87,7 @@ describe('App', () => {
         'Unable to calculate salary because of: ' +
         'Unable to get employee by ID \'0\''
       );
+      browser.assertRequests();
     }
   );
 });

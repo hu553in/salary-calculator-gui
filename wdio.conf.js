@@ -1,7 +1,7 @@
 exports.config = {
   runner: 'local',
   specs: [
-    './test/specs/**/*.js'
+    './test/specs/**/*.spec.js'
   ],
   maxInstances: 10,
   capabilities: [
@@ -23,7 +23,8 @@ exports.config = {
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
   services: [
-    'chromedriver'
+    'chromedriver',
+    'intercept'
   ],
   framework: 'mocha',
   reporters: [
