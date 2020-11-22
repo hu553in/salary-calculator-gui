@@ -1,4 +1,7 @@
 describe('App', () => {
+  const requestRegExp = RegExp(
+    'http://localhost:9920/api/calculate-salary/'
+  );
   beforeEach(() => browser.url('http://ui:3000'));
   it('should render page', () => {
     expect(browser).toHaveTitle('Salary calculator');
@@ -29,7 +32,7 @@ describe('App', () => {
     'via clicking "Calculate" button',
     () => {
       browser.setupInterceptor();
-      browser.expectRequest('GET', /\/api\/calculate-salary\//, 200);
+      browser.expectRequest('GET', requestRegExp, 200);
       $('.app__employeeIdInput').setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
       );
@@ -45,7 +48,7 @@ describe('App', () => {
     'via pressing "Enter" keyboard button',
     () => {
       browser.setupInterceptor();
-      browser.expectRequest('GET', /\/api\/calculate-salary\//, 200);
+      browser.expectRequest('GET', requestRegExp, 200);
       $('.app__employeeIdInput').setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
       );
@@ -61,7 +64,7 @@ describe('App', () => {
     'via clicking "Calculate" button',
     () => {
       browser.setupInterceptor();
-      browser.expectRequest('GET', /\/api\/calculate-salary\//, 422);
+      browser.expectRequest('GET', requestRegExp, 422);
       $('.app__employeeIdInput').setValue('0');
       $('.app__calculateButton').click();
       $('.app__errorsLabel').waitForExist();
@@ -78,7 +81,7 @@ describe('App', () => {
     'via pressing "Enter" keyboard button',
     () => {
       browser.setupInterceptor();
-      browser.expectRequest('GET', /\/api\/calculate-salary\//, 422);
+      browser.expectRequest('GET', requestRegExp, 422);
       $('.app__employeeIdInput').setValue('0');
       $('.app__employeeIdInput').keys('\uE007');
       $('.app__errorsLabel').waitForExist();
