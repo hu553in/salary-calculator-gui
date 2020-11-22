@@ -20,7 +20,6 @@ describe('App', () => {
     'should enable/disable "Calculate" button ' +
     'depending on employee ID input value emptiness',
     () => {
-      expect($('.app__calculateButton')).toBeDisabled();
       $('.app__employeeIdInput').setValue('0');
       expect($('.app__calculateButton')).toBeEnabled();
       $('.app__employeeIdInput').setValue('');
