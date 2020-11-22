@@ -30,7 +30,6 @@ const App = () => {
         (carry, current) => `${carry}, ${current}`)
       );
     }
-    console.log(JSON.stringify(e));
   }), [employeeId]);
   return (
     <main className="app">
@@ -53,13 +52,13 @@ const App = () => {
         onKeyUp={onEmployeeIdInputKeyUp}
         value={employeeId}
       ></input>
-      <button
+      <input
+        type="button"
         className="app__calculateButton"
         disabled={employeeId.length === 0}
         onClick={calculateSalary}
-      >
-        Calculate
-      </button>
+        value="Calculate"
+      />
       {employeeSalary !== null && (
         <>
           <p className="app__employeeSalaryLabel">
@@ -72,10 +71,10 @@ const App = () => {
       )}
       {errors !== null && (
         <>
-          <p className="app__errorLabel">
+          <p className="app__errorsLabel">
             There's a coupse of errors:
           </p>
-          <p className="app__error">
+          <p className="app__errors">
             {errors}
           </p>
         </>

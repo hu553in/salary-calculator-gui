@@ -27,10 +27,21 @@ exports.config = {
   ],
   framework: 'mocha',
   reporters: [
-    'spec'
+    'spec',
+    [
+      'allure',
+      {
+        disableWebdriverStepsReporting: true,
+      }
+    ]
   ],
   mochaOpts: {
     ui: 'bdd',
     timeout: 60000
+  },
+  afterTest: (_, __, { error }) => {
+    if (error) {
+      browser.takeScreenshot();
+    }
   }
 }

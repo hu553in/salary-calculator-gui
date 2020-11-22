@@ -50,8 +50,8 @@
 }
 
 .app__employeeSalaryLabel,
-.app__errorLabel,
-.app__error {
+.app__errorsLabel,
+.app__errors {
   margin-top: 0;
   margin-bottom: 0;
   line-height: 1.5em;
@@ -62,11 +62,11 @@
   width: 235px;
 }
 
-.app__errorLabel {
+.app__errorsLabel {
   width: 340px;
 }
 
-.app__error {
+.app__errors {
   width: 600px;
   word-wrap: break-word;
 }
