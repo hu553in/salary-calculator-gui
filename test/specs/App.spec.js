@@ -4,19 +4,19 @@ describe('App', () => {
   const appPage = new AppPage();
   const goodRequestRegExp =
     /\/calculate-salary\/a9978664-4d1d-40dd-81fa-d9026ef9485d$/;
-  const badRequestRegExp = /\/calculate-salary\/0$/
+  const badRequestRegExp = /\/calculate-salary\/0$/;
   it('should render page', () => {
     appPage.open();
     expect(browser).toHaveTitle('Salary calculator');
-    expect(appPage.rootContainer).toExist();
-    expect(appPage.appReactComponent).toExist();
-    expect(appPage.appContainer).toExist();
-    expect(appPage.logo).toExist();
-    expect(appPage.heading).toExist();
-    expect(appPage.instructions).toExist();
-    expect(appPage.employeeIdInput).toExist();
+    appPage.rootContainer.waitForExist();
+    appPage.appReactComponent.waitForExist();
+    appPage.appContainer.waitForExist();
+    appPage.logo.waitForExist();
+    appPage.heading.waitForExist();
+    appPage.instructions.waitForExist();
+    appPage.employeeIdInput.waitForExist();
     expect(appPage.employeeIdInput).toHaveValue('');
-    expect(appPage.calculateButton).toExist();
+    appPage.calculateButton.waitForExist();
     expect(appPage.calculateButton).toBeDisabled();
   });
   it(
@@ -24,9 +24,12 @@ describe('App', () => {
     'depending on employee ID input value emptiness',
     () => {
       appPage.open();
+      appPage.employeeIdInput.waitForExist();
+      appPage.calculateButton.waitForExist();
+      expect(appPage.calculateButton).toBeDisabled();
       appPage.employeeIdInput.setValue('0');
       expect(appPage.calculateButton).toBeEnabled();
-      appPage.employeeIdInput.setValue('');
+      appPage.employeeIdInput.keys('Backspace');
       expect(appPage.calculateButton).toBeDisabled();
     }
   );
@@ -37,9 +40,11 @@ describe('App', () => {
       appPage.open();
       browser.setupInterceptor();
       browser.expectRequest('GET', goodRequestRegExp, 200);
+      appPage.employeeIdInput.waitForExist();
       appPage.employeeIdInput.setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
       );
+      appPage.calculateButton.waitForEnabled();
       appPage.calculateButton.click();
       appPage.employeeSalaryLabel.waitForExist();
       appPage.employeeSalary.waitForExist();
@@ -56,10 +61,11 @@ describe('App', () => {
       appPage.open();
       browser.setupInterceptor();
       browser.expectRequest('GET', goodRequestRegExp, 200);
+      appPage.employeeIdInput.waitForExist();
       appPage.employeeIdInput.setValue(
         'a9978664-4d1d-40dd-81fa-d9026ef9485d'
       );
-      appPage.employeeIdInput.keys('\uE007');
+      appPage.employeeIdInput.keys('Enter');
       appPage.employeeSalaryLabel.waitForExist();
       appPage.employeeSalary.waitForExist();
       browser.assertRequests();
@@ -75,7 +81,9 @@ describe('App', () => {
       appPage.open();
       browser.setupInterceptor();
       browser.expectRequest('GET', badRequestRegExp, 422);
+      appPage.employeeIdInput.waitForExist();
       appPage.employeeIdInput.setValue('0');
+      appPage.calculateButton.waitForEnabled();
       appPage.calculateButton.click();
       appPage.errorsLabel.waitForExist();
       appPage.errors.waitForExist();
@@ -93,8 +101,9 @@ describe('App', () => {
       appPage.open();
       browser.setupInterceptor();
       browser.expectRequest('GET', badRequestRegExp, 422);
+      appPage.employeeIdInput.waitForExist();
       appPage.employeeIdInput.setValue('0');
-      appPage.employeeIdInput.keys('\uE007');
+      appPage.employeeIdInput.keys('Enter');
       appPage.errorsLabel.waitForExist();
       appPage.errors.waitForExist();
       browser.assertRequests();
