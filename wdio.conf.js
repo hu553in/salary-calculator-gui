@@ -38,7 +38,10 @@ exports.config = {
   ],
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60000
+    timeout: 60000,
+    require: [
+      '@babel/register'
+    ]
   },
   afterTest: (_, __, { error }) => {
     if (error) {
