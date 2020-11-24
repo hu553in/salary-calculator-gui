@@ -22,7 +22,6 @@ const App = () => {
     }
   }
 
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
   const calculateSalary = useCallback(
     () => axios
       .get(`/calculate-salary/${employeeId}`)
