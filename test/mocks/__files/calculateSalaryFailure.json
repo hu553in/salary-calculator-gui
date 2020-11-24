@@ -1,0 +1,7 @@
+{
+  "statusCode": 422,
+  "errors": [
+    "Unable to calculate salary because of: Unable to get employee by ID '1'"
+  ],
+  "data": null
+}

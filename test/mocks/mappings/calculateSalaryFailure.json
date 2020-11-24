@@ -1,0 +1,10 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/calculate-salary/1"
+  },
+  "response": {
+    "status": 422,
+    "bodyFileName": "calculateSalaryFailure.json"
+  }
+}

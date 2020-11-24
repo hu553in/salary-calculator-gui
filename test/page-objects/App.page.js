@@ -1,6 +1,7 @@
 export default class AppPage {
   open() {
     browser.url('http://ui:3000');
+    browser.setWindowSize(1920, 1080);
   }
 
   get rootContainer() {

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useCallback, useState } from 'react';
+import RenderIfTrue from '../render-if-true/RenderIfTrue';
 import './App.css';
 import logo from './logo.svg';
 
@@ -7,37 +8,44 @@ const App = () => {
   const [employeeId, setEmployeeId] = useState("");
   const [employeeSalary, setEmployeeSalary] = useState(null);
   const [errors, setErrors] = useState(null);
+
   const onEmployeeIdInputChange = (event) => {
     event.preventDefault();
     setEmployeeId(event.target.value);
     setErrors(null);
   };
+
   const onEmployeeIdInputKeyUp = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
       calculateSalary();
     }
   }
-  const calculateSalary = useCallback(async () => await axios.get(
-    `http://localhost:9920/api/calculate-salary/${employeeId}`
-  ).then((response) => {
-    setEmployeeSalary(response.data.data.salary);
-    setErrors(null);
-  }).catch((e) => {
-    if (e.response) {
-      setEmployeeSalary(null);
-      setErrors(e.response.data.errors.reduce(
-        (carry, current) => `${carry}, ${current}`)
-      );
-    }
-  }), [employeeId]);
+
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+  const calculateSalary = useCallback(
+    () => axios
+      .get(`/calculate-salary/${employeeId}`)
+      .then((response) => {
+        setEmployeeSalary(response.data.data.salary);
+        setErrors(null);
+      })
+      .catch((e) => {
+        setEmployeeSalary(null);
+        if (e.response) {
+          setErrors(e.response.data.errors.reduce(
+            (carry, current) => `${carry}, ${current}`)
+          );
+        } else {
+          setErrors('Unknown error');
+        }
+      }),
+    [employeeId]
+  );
+
   return (
     <main className="app">
-      <img
-        className="app__logo"
-        src={logo}
-        alt="Logo"
-      />
+      <img className="app__logo" src={logo} alt="Logo" />
       <h1 className="app__heading">Salary calculator</h1>
       <p className="app__instructions">
         Enter an employee ID in the field below and then
@@ -59,26 +67,18 @@ const App = () => {
         onClick={calculateSalary}
         value="Calculate"
       />
-      {employeeSalary !== null && (
-        <>
-          <p className="app__employeeSalaryLabel">
-            Employee salary is
-          </p>
-          <p className="app__employeeSalary">
-            {employeeSalary}
-          </p>
-        </>
-      )}
-      {errors !== null && (
-        <>
-          <p className="app__errorsLabel">
-            There's a coupse of errors:
-          </p>
-          <p className="app__errors">
-            {errors}
-          </p>
-        </>
-      )}
+      <RenderIfTrue statement={employeeSalary !== null}>
+        <p className="app__employeeSalaryLabel">
+          Employee salary is
+        </p>
+        <p className="app__employeeSalary">{employeeSalary}</p>
+      </RenderIfTrue>
+      <RenderIfTrue statement={errors !== null}>
+        <p className="app__errorsLabel">
+          There's a couple of errors:
+        </p>
+        <p className="app__errors">{errors}</p>
+      </RenderIfTrue>
     </main>
   );
 }
