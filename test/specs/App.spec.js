@@ -2,7 +2,7 @@ import AppPage from '../page-objects/App.page';
 
 describe('App', () => {
   const appPage = new AppPage();
-  const calculateSalarySuccessRequestRegExp = /\/calculate-salary\/0$/;
+  const calculateSalarySuccessRequestRegExp = /\/calculate-salary\/a9978664-4d1d-40dd-81fa-d9026ef9485d$/;
   const calculateSalaryFailureRequestRegExp = /\/calculate-salary\/1$/;
 
   it('should render page', () => {
@@ -43,13 +43,13 @@ describe('App', () => {
       browser.setupInterceptor();
       browser.expectRequest('GET', calculateSalarySuccessRequestRegExp, 200);
       appPage.employeeIdInput.waitForExist();
-      appPage.employeeIdInput.setValue('0');
+      appPage.employeeIdInput.setValue('a9978664-4d1d-40dd-81fa-d9026ef9485d');
       appPage.calculateButton.waitForClickable();
       appPage.calculateButton.click();
       appPage.employeeSalaryLabel.waitForExist();
       appPage.employeeSalary.waitForExist();
       browser.assertRequests();
-      expect(appPage.employeeSalary).toHaveText('500');
+      expect(appPage.employeeSalary).toHaveText('39166.666666666664');
     }
   );
 
@@ -61,12 +61,12 @@ describe('App', () => {
       browser.setupInterceptor();
       browser.expectRequest('GET', calculateSalarySuccessRequestRegExp, 200);
       appPage.employeeIdInput.waitForExist();
-      appPage.employeeIdInput.setValue('0');
+      appPage.employeeIdInput.setValue('a9978664-4d1d-40dd-81fa-d9026ef9485d');
       appPage.employeeIdInput.keys('Enter');
       appPage.employeeSalaryLabel.waitForExist();
       appPage.employeeSalary.waitForExist();
       browser.assertRequests();
-      expect(appPage.employeeSalary).toHaveText('500');
+      expect(appPage.employeeSalary).toHaveText('39166.666666666664');
     }
   );
 

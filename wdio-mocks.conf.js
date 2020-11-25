@@ -20,7 +20,15 @@ exports.config = {
   connectionRetryCount: 3,
   services: [
     'chromedriver',
-    'intercept'
+    'intercept',
+    [
+      'wiremock',
+      {
+        rootDir: './test/mocks',
+        port: 9920,
+        args: ['--enable-stub-cors']
+      }
+    ]
   ],
   framework: 'mocha',
   reporters: [
